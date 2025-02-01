@@ -7,6 +7,8 @@ import { CompanyStore } from '@/stores/company.store';
 import { TeamMemberStore } from '@/stores/team-member.store';
 import { PodcastStore } from '@/stores/podcast.store';
 import { EpisodeStore } from '@/stores/episode.store';
+import { ProgramStore } from '@/stores/program.store';
+import { ScheduleStore } from '@/stores/schedule.store';
 
 export interface Store {
   user: UserStore;
@@ -14,6 +16,8 @@ export interface Store {
   company: CompanyStore;
   podcast: PodcastStore;
   episode: EpisodeStore;
+  schedule: ScheduleStore;
+  program: ProgramStore;
 }
 
 export const initialStoreValue = {
@@ -22,6 +26,8 @@ export const initialStoreValue = {
   company: new CompanyStore(),
   podcast: new PodcastStore(),
   episode: new EpisodeStore(),
+  schedule: new ScheduleStore(),
+  program: new ProgramStore(),
 };
 
 // function to clear all stores
@@ -36,6 +42,8 @@ if (typeof window !== 'undefined') {
     company: initialStoreValue.company,
     podcast: initialStoreValue.podcast,
     episode: initialStoreValue.episode,
+    schedule: initialStoreValue.schedule,
+    program: initialStoreValue.program,
   });
 }
 

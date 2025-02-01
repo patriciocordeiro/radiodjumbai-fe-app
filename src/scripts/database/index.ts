@@ -1,4 +1,4 @@
-import { Episode, Podcast } from '../../models/app-general.model';
+import { Episode, Podcast, Program, Schedule } from '../../models/app-general.model';
 import { faker } from "@faker-js/faker";
 import { firestore } from 'firebase-admin';
 
@@ -163,8 +163,70 @@ async function saveEpisodeToFirestore(episode: Episode): Promise<void> {
     }
 }
 
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const START_HOUR = 6;
+const END_HOUR = 24; // Midnight (24:00)
+
+const formatTime = (hour: number, minute: number): string => {
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+};
+
+async function createProgramAndSchedule() {
+    const getTimeInMillis = (dayOfWeek: string, hour: number, minute: number): number => {
+        const dayIndex = daysOfWeek.indexOf(dayOfWeek);
+        const now = new Date();
+        const baseDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + dayIndex);
+        baseDate.setHours(hour, minute, 0, 0);
+        return baseDate.getTime();
+    };
+
+    for (let i = 0; i < 5; i++) {
+        const program: Program = {
+            name: faker.company.name(),
+            description: faker.lorem.sentence(),
+            host: faker.person.fullName(),
+            genre: faker.helpers.arrayElement(['News', 'Music', 'Talk Show', 'Sports', 'Documentary']),
+        };
+
+        const programDoc = await db.collection('Program').add(program);
+        console.log(`Added Program with ID: ${programDoc.id}`);
+
+        for (const day of daysOfWeek) {
+            let currentHour = START_HOUR;
+            let currentMinute = 0;
+
+            while (currentHour < END_HOUR) {
+                const startTime = formatTime(currentHour, currentMinute);
+                const startMillis = getTimeInMillis(day, currentHour, currentMinute);
+
+                currentMinute += 30;
+                if (currentMinute === 60) {
+                    currentMinute = 0;
+                    currentHour += 1;
+                }
+                const endTime = formatTime(currentHour, currentMinute);
+                const endMillis = getTimeInMillis(day, currentHour, currentMinute);
+
+                const scheduleEntry: Schedule = {
+                    dayOfWeek: day,
+                    startTime,
+                    endTime,
+                    startTimeInMilliseconds: startMillis,
+                    endTimeInMilliseconds: endMillis,
+                    programId: programDoc.id,
+                };
+
+                await db.collection('Schedule').add(scheduleEntry);
+                console.log(`Added Schedule for ${program.name} on ${day} from ${startTime} to ${endTime}`);
+            }
+        }
+    }
+}
+
+createProgramAndSchedule();
+
 // Example usage: Generate 10 podcasts with 5 episodes each
-createFakePodcastData(10, 5);
+// createFakePodcastData(10, 5);
 
 
 

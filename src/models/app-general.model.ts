@@ -1,3 +1,5 @@
+import { DayOfWeek } from '@/enums/process-status';
+
 export interface User {
     id: string;
     name: string;
@@ -62,4 +64,24 @@ export interface Episode {
     podcastId: string; // ID of the podcast
     contentUrl: string; // URL to the podcast content
     contentType: 'audio' | 'video'; // Type of content
+}
+
+export interface Schedule {
+    id?: string;
+    dayOfWeek: DayOfWeek;
+    programId: string;
+    startTime: string;
+    endTime: string;
+    startTimeInMilliseconds: number;
+    endTimeInMilliseconds: number;
+    program?: Program;
+}
+
+export interface Program {
+    id?: string; // Firestore document ID
+    name: string; // Program name
+    description?: string; // Program description
+    host?: string; // Program host if applicable
+    genre?: string; // E.g., "News", "Music", "Talk Show"
+    imageUrl?: string; // Image for the program
 }

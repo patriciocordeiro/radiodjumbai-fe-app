@@ -15,3 +15,13 @@ export enum AppRoutes {
   ARTIGOS = 'artigos',
   MORE = 'more',
 }
+
+export enum DayOfWeek {
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+  Saturday = 'Saturday',
+  Sunday = 'Sunday',
+}

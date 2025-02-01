@@ -16,9 +16,10 @@ import { useEffect } from 'react';
 import { Filter } from '@/services/firebase/firebase-firestore.service';
 import { PlayCircle } from '@mui/icons-material';
 import { observer } from 'mobx-react-lite';
-import { ProcessStatus } from '@/enums/process-status';
+import { AppRoutes, ProcessStatus } from '@/enums/process-status';
 import { StoreKeys } from '@/stores/base.store';
 import LoadingBox from '@/components/LoadingBox';
+import Link from 'next/link';
 
 const PodcastEpisodesPage: React.FC = () => {
   const store = React.useContext(StoreContext);
@@ -67,15 +68,20 @@ const PodcastEpisodesPage: React.FC = () => {
         </Typography>
         <List>
           {store.episode.itemList.map((episode) => (
-            <ListItem divider key={episode.id}>
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                <PlayCircle />
-              </ListItemIcon>
-              <ListItemText
-                primary={episode.title}
-                secondary={episode.description}
-              />
-            </ListItem>
+            <Link
+              onClick={() => store.episode.setSelectedItem({ item: episode })}
+              href={`/${AppRoutes.PODCASTS}/${episode.podcastId}/episode/${episode?.id}`}
+              key={episode.id}>
+              <ListItem divider>
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <PlayCircle />
+                </ListItemIcon>
+                <ListItemText
+                  primary={episode.title}
+                  secondary={episode.description}
+                />
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Box>
