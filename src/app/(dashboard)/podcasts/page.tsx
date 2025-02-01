@@ -1,43 +1,93 @@
-import React from 'react';
+'use client';
+import * as React from 'react';
+
 import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
   Card,
   CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+  Box,
+  Link,
+  CardActionArea,
 } from '@mui/material';
+import StoreContext from '@/context/StoreContext';
+import { useEffect } from 'react';
+import { StoreKeys } from '@/stores/base.store';
+import { AppRoutes, ProcessStatus } from '@/enums/process-status';
+import LoadingBox from '@/components/LoadingBox';
+import { Podcast } from '@/models/app-general.model';
+import { observer } from 'mobx-react-lite';
 
-const podcastData = [
-  { title: 'Episode 1: Introduction to Radio Life', duration: '15:30' },
-  { title: 'Episode 2: The History of Radio Broadcasting', duration: '22:45' },
-  { title: 'Episode 3: Meet the Hosts', duration: '18:10' },
-  { title: 'Episode 4: Behind the Scenes of Radio Life', duration: '30:20' },
-];
+interface PodcastCardProps {
+  podcast: Podcast;
+}
 
-const PodcastPage = () => {
+const PodcastCard: React.FC<PodcastCardProps> = ({ podcast }) => {
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant='h4' gutterBottom>
+    <Card sx={{ height: '100%' }}>
+      <CardActionArea>
+        <Link href={`/${AppRoutes.PODCASTS}/${podcast?.id}`}>
+          <CardMedia
+            component='img'
+            height='140'
+            image={podcast?.imageUrl}
+            alt={podcast?.title}
+          />
+          <CardContent>
+            <Typography gutterBottom variant='h5' component='div'>
+              {podcast?.title}
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              {podcast?.author}
+            </Typography>
+            <Link href={`/${AppRoutes.PODCASTS}/${podcast?.id}`}>
+              See Episodes
+            </Link>
+          </CardContent>
+        </Link>
+      </CardActionArea>
+    </Card>
+  );
+};
+
+const PodcastListPage: React.FC = () => {
+  const store = React.useContext(StoreContext);
+  const [podcasts, setPodcasts] = React.useState(store.podcast.itemList);
+  const [loading, setLoading] = React.useState<boolean>(true);
+
+  useEffect(() => {
+    store.podcast.listItems();
+  }, []);
+
+  useEffect(() => {
+    setLoading(
+      store.podcast.status[StoreKeys.ListItems] === ProcessStatus.LOADING
+    );
+  }, [store.podcast.status[StoreKeys.ListItems]]);
+
+  useEffect(() => {
+    setPodcasts(store.podcast.itemList);
+  }, [store.podcast.selectedItem]);
+
+  return (
+    <Box sx={{ padding: 2 }}>
+      <Typography variant='h3' gutterBottom>
         Podcasts
       </Typography>
-      <Card>
-        <CardContent>
-          <List>
-            {podcastData.map((episode, index) => (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={episode.title}
-                  secondary={`Duration: ${episode.duration}`}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </CardContent>
-      </Card>
+      {loading ? (
+        <LoadingBox />
+      ) : (
+        <Grid container spacing={3}>
+          {podcasts.map((podcast) => (
+            <Grid item xs={12} sm={6} md={4} lg={4} key={podcast.id}>
+              <PodcastCard podcast={podcast} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </Box>
   );
 };
 
-export default PodcastPage;
+export default observer(PodcastListPage);

@@ -5,10 +5,6 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { StoreProvider } from '@/context/StoreContext';
-import { ThemeProvider } from '@emotion/react';
-import theme from '@/theme';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import Main from './main';
 
 const geistSans = Geist({

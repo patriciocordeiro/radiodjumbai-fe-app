@@ -1,4 +1,3 @@
-
 export enum ProcessStatus {
   LOADING = 'loading',
   LOADED = 'loaded',
@@ -6,5 +5,13 @@ export enum ProcessStatus {
   SAVING = 'saving',
   SAVED = 'saved',
   ERROR = 'error',
-  IDLE = 'idle'
+  IDLE = 'idle',
+}
+
+export enum AppRoutes {
+  HOME = 'home',
+  PROGRAMACAO = 'programacao',
+  PODCASTS = 'podcasts',
+  ARTIGOS = 'artigos',
+  MORE = 'more',
 }

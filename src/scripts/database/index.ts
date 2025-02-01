@@ -1,8 +1,10 @@
+import { Episode, Podcast } from '../../models/app-general.model';
 import { faker } from "@faker-js/faker";
 import { firestore } from 'firebase-admin';
 
 import admin from 'firebase-admin';
-admin.initializeApp({
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
+const app = admin.initializeApp({
     projectId: 'radiodjumbai-8f473'
 });
 
@@ -77,10 +79,7 @@ const createCompany = async () => {
         city: faker.location.city(),
         country: faker.location.country(),
         email: faker.internet.email(),
-        phones: [
-            faker.phone.number(),
-            faker.phone.number()
-        ],
+        phone: faker.phone.number(),
         social: [
             {
                 platform: 'Facebook',
@@ -106,6 +105,70 @@ const createCompany = async () => {
     }
 };
 
+
+function generateFakePodcast(): Podcast {
+    return {
+        title: faker.lorem.words(3),
+        description: faker.lorem.paragraph(),
+        imageUrl: faker.image.url(),
+        author: faker.person.fullName(),
+        releaseDate: faker.date.past(),
+
+    };
+}
+
+function generateFakeEpisode(podcastId: string): Episode {
+    return {
+        title: faker.lorem.words(2),
+        description: faker.lorem.sentence(),
+        releaseDate: faker.date.past(),
+        duration: faker.number.int({ min: 60, max: 3600 }), // Duration in seconds (1-60 minutes)
+        podcastId,
+        contentUrl: faker.internet.url(),
+        contentType: faker.helpers.arrayElement(['audio', 'video']),
+    };
+}
+
+async function createFakePodcastData(numPodcasts: number = 5, episodesPerPodcast: number = 3): Promise<{ podcasts: Podcast[]; episodes: Episode[]; }> {
+    const podcasts: Podcast[] = [];
+    const episodes: Episode[] = [];
+
+    const podcastsCollectionRef = db.collection("Podcast");
+
+
+    for (let i = 0; i < numPodcasts; i++) {
+        const podcast = generateFakePodcast();
+        // save the podcast to Firestore
+        const newPodcast = await podcastsCollectionRef.add(podcast);
+        podcasts.push(podcast);
+        for (let j = 0; j < episodesPerPodcast; j++) {
+            const episode = generateFakeEpisode(newPodcast.id);
+            await saveEpisodeToFirestore(episode);
+            episodes.push(episode);
+        }
+    }
+
+    return { podcasts, episodes };
+}
+
+async function saveEpisodeToFirestore(episode: Episode): Promise<void> {
+    const episodesCollectionRef = db.collection("Episode");
+
+    try {
+        await episodesCollectionRef.add(episode);
+        console.log("Episode saved successfully:", episode.title);
+    } catch (error: any) {
+        console.error("Error saving episode:", error.message);
+        throw error;
+    }
+}
+
+// Example usage: Generate 10 podcasts with 5 episodes each
+createFakePodcastData(10, 5);
+
+
+
+
 //Example usage:  Creates 10 fake team members.
 // createFakeTeamMembers(10)
 //     .then(() => process.exit(0))
@@ -117,9 +180,10 @@ const createCompany = async () => {
 
 
 //Example usage:  Creates a fake company.
-createCompany()
-    .then(() => process.exit(0))
-    .catch(err => {
-        console.error("An unexpected error occurred:", err);
-        process.exit(1);
-    });
+// createCompany()
+//     .then(() => process.exit(0))
+//     .catch(err => {
+//         console.error("An unexpected error occurred:", err);
+//         process.exit(1);
+//     });
+

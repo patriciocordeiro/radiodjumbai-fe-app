@@ -4,6 +4,6 @@ import BaseStore from './base.store';
 
 export class TeamMemberStore extends BaseStore<TeamMember> {
     constructor() {
-        super('TeamMember');
+        super('TeamMemberStore');
     }
 }

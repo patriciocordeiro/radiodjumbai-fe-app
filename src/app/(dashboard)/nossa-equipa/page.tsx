@@ -30,7 +30,7 @@ const TeamPage = () => {
   }, []);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box>
       <Typography variant='h4' gutterBottom>
         Nossa Equipa
       </Typography>

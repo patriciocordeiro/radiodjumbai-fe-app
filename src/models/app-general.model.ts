@@ -36,8 +36,30 @@ export interface Company {
     name: string;
     logo: string;
     description: string;
-    phones: string[];
+    phone: string;
     email: string;
     address: string;
     social: Social[];
+}
+
+export interface Podcast {
+    id?: string;
+    title: string;
+    description: string; // Longer description
+    imageUrl: string;
+    author: string;
+    releaseDate: Date; // Podcast release date
+
+}
+
+
+export interface Episode {
+    id?: string;
+    title: string;
+    description: string;
+    releaseDate: Date;
+    duration: number; // Duration in seconds
+    podcastId: string; // ID of the podcast
+    contentUrl: string; // URL to the podcast content
+    contentType: 'audio' | 'video'; // Type of content
 }

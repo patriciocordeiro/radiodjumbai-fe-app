@@ -6,6 +6,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
+  Container,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import ScheduleIcon from '@mui/icons-material/Event';
@@ -16,13 +17,18 @@ import Link from 'next/link';
 import { useState } from 'react';
 import MoreOptionsDialog from './MoreOptionsDialog';
 import useCompany from '@/hooks/useCompany';
+import { AppRoutes } from '@/enums/process-status';
 
 const navItems = [
-  { label: 'Home', icon: <HomeIcon />, link: '/home' },
-  { label: 'Programação', icon: <ScheduleIcon />, link: '/programacao' },
-  { label: 'Podcasts', icon: <PodcastsIcon />, link: '/podcasts' },
-  { label: 'Artigos', icon: <ArticleIcon />, link: '/artigos' },
-  { label: 'Mais', icon: <MoreVertIcon />, link: '/more' },
+  { label: 'Home', icon: <HomeIcon />, route: `/${AppRoutes.HOME}` },
+  {
+    label: 'Schedule',
+    icon: <ScheduleIcon />,
+    route: `/${AppRoutes.PROGRAMACAO}`,
+  },
+  { label: 'Podcasts', icon: <PodcastsIcon />, route: `/${AppRoutes.PODCASTS}` },
+  { label: 'Articles', icon: <ArticleIcon />, route: `/${AppRoutes.ARTIGOS}` },
+  { label: 'Mais', icon: <MoreVertIcon /> },
 ];
 
 interface MobileRadioHomePageProps {
@@ -54,7 +60,7 @@ export default function MobileRadioHomePage({
       </AppBar>
 
       {/* Main Content */}
-      <Box sx={{ flex: 1, p: 2 }}>{children}</Box>
+      <Container>{children}</Container>
       {/* Bottom Navigation */}
       <BottomNavigation
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
@@ -76,8 +82,8 @@ export default function MobileRadioHomePage({
               key={item.label}
               label={item.label}
               icon={item.icon}
-              component={Link}
-              href={item.link}
+              component={item.route ? Link : 'div'}
+              href={item.route ?? ''}
             />
           )
         )}

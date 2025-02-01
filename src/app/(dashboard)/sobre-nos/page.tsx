@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import StoreContext from '@/context/StoreContext';
 import { Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
