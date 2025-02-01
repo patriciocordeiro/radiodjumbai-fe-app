@@ -1,3 +1,8 @@
+'use client';
+import LoadingBox from '@/components/LoadingBox';
+import StoreContext from '@/context/StoreContext';
+import { ProcessStatus } from '@/enums/process-status';
+import { StoreKeys } from '@/stores/base.store';
 import {
   Box,
   Typography,
@@ -7,36 +12,49 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-
-const teamData = [
-  { name: 'John Doe', position: 'CEO' },
-  { name: 'Jane Doe', position: 'CFO' },
-  { name: 'Alice Doe', position: 'CTO' },
-  { name: 'Bob Doe', position: 'COO' },
-];
+import { observer } from 'mobx-react-lite';
+import { use, useContext, useEffect, useState } from 'react';
 
 const TeamPage = () => {
+  const store = useContext(StoreContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(
+      store.teamMember.status[StoreKeys.ListItems] === ProcessStatus.LOADING
+    );
+  }, [store.teamMember.status[StoreKeys.ListItems]]);
+
+  useEffect(() => {
+    store.teamMember.listItems();
+  }, []);
+
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant='h4' gutterBottom>
         Nossa Equipa
       </Typography>
-      <Card>
-        <CardContent>
-          <List>
-            {teamData.map((member, index) => (
-              <ListItem key={member.name}>
-                <ListItemText
-                  primary={member.name}
-                  secondary={`Position: ${member.position}`}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </CardContent>
-      </Card>
+
+      {loading ? (
+        <LoadingBox />
+      ) : (
+        <Card>
+          <CardContent>
+            <List>
+              {store.teamMember.itemList.map((member, index) => (
+                <ListItem key={member.name}>
+                  <ListItemText
+                    primary={member.name}
+                    secondary={`Position: ${member.role}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      )}
     </Box>
   );
 };
 
-export default TeamPage;
+export default observer(TeamPage);

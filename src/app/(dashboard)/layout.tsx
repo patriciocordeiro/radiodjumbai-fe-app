@@ -15,6 +15,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Link from 'next/link';
 import { useState } from 'react';
 import MoreOptionsDialog from './MoreOptionsDialog';
+import useCompany from '@/hooks/useCompany';
 
 const navItems = [
   { label: 'Home', icon: <HomeIcon />, link: '/home' },
@@ -24,11 +25,14 @@ const navItems = [
   { label: 'Mais', icon: <MoreVertIcon />, link: '/more' },
 ];
 
+interface MobileRadioHomePageProps {
+  readonly children: React.ReactNode;
+}
+
 export default function MobileRadioHomePage({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: MobileRadioHomePageProps) {
+  useCompany();
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
 
