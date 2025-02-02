@@ -1,21 +1,29 @@
-'use client'
+'use client';
 import StoreContext from '@/context/StoreContext';
-import { Box, Typography } from '@mui/material';
+import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 
 const AboutUsPage = () => {
   const store = useContext(StoreContext);
-  store.company.selectedItem!;
 
   return (
     <Box>
       <Typography variant='h4' gutterBottom>
-        {store.company.selectedItem?.name}
+        Sobre {store.company.selectedItem?.name}
       </Typography>
-      <Typography variant='body1'>
-        {store.company.selectedItem?.description}
-      </Typography>
+      <Divider />
+      <Box sx={{ mt: 2 }}>
+        <Card sx={{ height: '100%' }}>
+          <CardContent>
+            <Typography
+              variant='body1'
+              sx={{ lineHeight: ' 28px', textAlign: 'justify' }}>
+              {store.company.selectedItem?.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 };

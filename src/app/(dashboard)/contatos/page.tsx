@@ -7,6 +7,9 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  Divider,
+  Card,
+  CardContent,
 } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -33,44 +36,51 @@ const ContactsPage = () => {
       <Typography variant='h4' gutterBottom>
         Entre em contato
       </Typography>
+      <Divider />
       {loading ? (
         <LoadingBox />
       ) : (
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <PhoneIcon />
-            </ListItemIcon>
-            <ListItemText
-              aria-label='phone'
-              primary='Telefone:'
-              secondary={store.company.selectedItem?.phone}
-            />
-          </ListItem>
+        <Box sx={{ mt: 2 }}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent>
+              <List>
+                <ListItem>
+                  <ListItemIcon>
+                    <PhoneIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    aria-label='phone'
+                    primary='Telefone:'
+                    secondary={store.company.selectedItem?.phone}
+                  />
+                </ListItem>
 
-          <ListItem>
-            <ListItemIcon>
-              <EmailIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary='Email:'
-              secondary={
-                <a href={`mailto:${store.company.selectedItem?.email}`}>
-                  {store.company.selectedItem?.email}
-                </a>
-              }
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <LocationOn />
-            </ListItemIcon>
-            <ListItemText
-              primary='Endereço:'
-              secondary={store.company.selectedItem?.address}
-            />
-          </ListItem>
-        </List>
+                <ListItem>
+                  <ListItemIcon>
+                    <EmailIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary='Email:'
+                    secondary={
+                      <a href={`mailto:${store.company.selectedItem?.email}`}>
+                        {store.company.selectedItem?.email}
+                      </a>
+                    }
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <LocationOn />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary='Endereço:'
+                    secondary={store.company.selectedItem?.address}
+                  />
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+        </Box>
       )}
     </Box>
   );

@@ -7,6 +7,7 @@ import {
   ListItemText,
   Card,
   CardContent,
+  Divider,
 } from '@mui/material';
 
 const articleData = [
@@ -38,20 +39,23 @@ const ArticlesPage = () => {
       <Typography variant='h4' gutterBottom>
         Articles
       </Typography>
-      <Card>
-        <CardContent>
-          <List>
-            {articleData.map((article, index) => (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={article.title}
-                  secondary={`By ${article.author} on ${article.date}`}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </CardContent>
-      </Card>
+      <Divider />
+      <Box sx={{ mt: 2 }}>
+        <Card>
+          <CardContent>
+            <List>
+              {articleData.map((article, index) => (
+                <ListItem key={index}>
+                  <ListItemText
+                    primary={article.title}
+                    secondary={`By ${article.author} on ${article.date}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 };

@@ -10,6 +10,7 @@ import {
   Box,
   Link,
   CardActionArea,
+  Divider,
 } from '@mui/material';
 import StoreContext from '@/context/StoreContext';
 import { useEffect } from 'react';
@@ -72,19 +73,23 @@ const PodcastListPage: React.FC = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant='h3' gutterBottom>
+      <Typography variant='h4' gutterBottom>
         Podcasts
       </Typography>
+      <Divider />
+
       {loading ? (
         <LoadingBox />
       ) : (
-        <Grid container spacing={3}>
-          {podcasts.map((podcast) => (
-            <Grid item xs={12} sm={6} md={4} lg={4} key={podcast.id}>
-              <PodcastCard podcast={podcast} />
-            </Grid>
-          ))}
-        </Grid>
+        <Box sx={{ mt: 2 }}>
+          <Grid container spacing={3}>
+            {podcasts.map((podcast) => (
+              <Grid item xs={12} sm={6} md={4} lg={4} key={podcast.id}>
+                <PodcastCard podcast={podcast} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       )}
     </Box>
   );

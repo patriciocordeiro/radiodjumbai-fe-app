@@ -14,6 +14,9 @@ export enum AppRoutes {
   PODCASTS = 'podcasts',
   ARTIGOS = 'artigos',
   MORE = 'more',
+  TEAM_MEMBERS = 'nossa-equipa',
+  ABOUT_US = 'sobre-nos',
+  CONTACTS = 'contatos',
 }
 
 export enum DayOfWeek {

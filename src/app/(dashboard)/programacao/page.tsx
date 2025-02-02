@@ -13,6 +13,7 @@ import {
   Collapse,
   IconButton,
   Stack,
+  Divider,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StoreContext from '@/context/StoreContext';
@@ -90,65 +91,68 @@ const SchedulePage = () => {
   };
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box>
       <Typography variant='h4' gutterBottom>
         Nossa programação
       </Typography>
-      <Tabs
-        value={selectedDay}
-        onChange={handleDayChange}
-        aria-label='Weekday Tabs'>
-        {Object.keys(DayOfWeek)
-          .filter((key) => isNaN(Number(key)))
-          .map((day) => (
-            <Tab
-              key={day}
-              label={weeklyDayMap[day as keyof typeof weeklyDayMap]}
-            />
-          ))}
-      </Tabs>
-      <Card>
-        <CardContent>
-          <List>
-            {scheduleData.map((item, index) => (
-              <ListItem divider key={item.id} sx={{ width: '100%' }}>
-                <Stack direction={'column'} flex={1} alignContent={'start'}>
-                  <Stack
-                    direction='row'
-                    spacing={2}
-                    alignItems={'center'}
-                    justifyContent={'space-between'}>
-                    <Stack direction='row' spacing={2} alignItems={'center'}>
-                      <ListItemText primary={`${item.startTime}`} />
-                      <ListItemText primary={`${item.program?.name}`} />
-                    </Stack>
-                    <Stack direction='row' spacing={2} alignItems={'center'}>
-                      <IconButton
-                        onClick={() => handleExpandClick(index)}
-                        aria-expanded={expandedIndex === index}
-                        aria-label='show more'>
-                        {expandedIndex === index ? (
-                          <ExpandLessIcon />
-                        ) : (
-                          <ExpandMoreIcon />
-                        )}
-                      </IconButton>
-                    </Stack>
-                  </Stack>
-                  <Collapse
-                    in={expandedIndex === index}
-                    timeout='auto'
-                    unmountOnExit>
-                    <Box sx={{ mt: 1, p: 1 }}>
-                      {renderProgramDetail(item.program!)}{' '}
-                    </Box>
-                  </Collapse>
-                </Stack>
-              </ListItem>
+      <Divider />
+      <Box sx={{ mt: 2 }}>
+        <Tabs
+          value={selectedDay}
+          onChange={handleDayChange}
+          aria-label='Weekday Tabs'>
+          {Object.keys(DayOfWeek)
+            .filter((key) => isNaN(Number(key)))
+            .map((day) => (
+              <Tab
+                key={day}
+                label={weeklyDayMap[day as keyof typeof weeklyDayMap]}
+              />
             ))}
-          </List>
-        </CardContent>
-      </Card>
+        </Tabs>
+        <Card>
+          <CardContent>
+            <List>
+              {scheduleData.map((item, index) => (
+                <ListItem divider key={item.id} sx={{ width: '100%' }}>
+                  <Stack direction={'column'} flex={1} alignContent={'start'}>
+                    <Stack
+                      direction='row'
+                      spacing={2}
+                      alignItems={'center'}
+                      justifyContent={'space-between'}>
+                      <Stack direction='row' spacing={2} alignItems={'center'}>
+                        <ListItemText primary={`${item.startTime}`} />
+                        <ListItemText primary={`${item.program?.name}`} />
+                      </Stack>
+                      <Stack direction='row' spacing={2} alignItems={'center'}>
+                        <IconButton
+                          onClick={() => handleExpandClick(index)}
+                          aria-expanded={expandedIndex === index}
+                          aria-label='show more'>
+                          {expandedIndex === index ? (
+                            <ExpandLessIcon />
+                          ) : (
+                            <ExpandMoreIcon />
+                          )}
+                        </IconButton>
+                      </Stack>
+                    </Stack>
+                    <Collapse
+                      in={expandedIndex === index}
+                      timeout='auto'
+                      unmountOnExit>
+                      <Box sx={{ mt: 1, p: 1 }}>
+                        {renderProgramDetail(item.program!)}{' '}
+                      </Box>
+                    </Collapse>
+                  </Stack>
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 };

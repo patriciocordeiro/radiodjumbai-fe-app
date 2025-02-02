@@ -47,7 +47,7 @@ async function createFakeTeamMembers(numMembers: number = 5) {
             name: faker.person.fullName(),
             role: faker.person.jobTitle(),
             description: faker.lorem.paragraph(),
-            image: `https://via.placeholder.com/150`, // Placeholder image - replace with your logic
+            image: faker.image.url(),
             email: faker.internet.email(),
             phone: faker.phone.number(),
             social,
@@ -223,7 +223,7 @@ async function createProgramAndSchedule() {
     }
 }
 
-createProgramAndSchedule();
+// createProgramAndSchedule();
 
 // Example usage: Generate 10 podcasts with 5 episodes each
 // createFakePodcastData(10, 5);
@@ -232,12 +232,12 @@ createProgramAndSchedule();
 
 
 //Example usage:  Creates 10 fake team members.
-// createFakeTeamMembers(10)
-//     .then(() => process.exit(0))
-//     .catch(err => {
-//         console.error("An unexpected error occurred:", err);
-//         process.exit(1);
-//     });
+createFakeTeamMembers(10)
+    .then(() => process.exit(0))
+    .catch(err => {
+        console.error("An unexpected error occurred:", err);
+        process.exit(1);
+    });
 
 
 

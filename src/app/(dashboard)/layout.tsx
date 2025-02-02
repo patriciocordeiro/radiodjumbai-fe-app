@@ -7,6 +7,8 @@ import {
   BottomNavigationAction,
   Box,
   Container,
+  Menu,
+  MenuItem,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import ScheduleIcon from '@mui/icons-material/Event';
@@ -15,7 +17,6 @@ import ArticleIcon from '@mui/icons-material/Article';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Link from 'next/link';
 import { useState } from 'react';
-import MoreOptionsDialog from './MoreOptionsDialog';
 import useCompany from '@/hooks/useCompany';
 import { AppRoutes } from '@/enums/process-status';
 
@@ -26,9 +27,19 @@ const navItems = [
     icon: <ScheduleIcon />,
     route: `/${AppRoutes.PROGRAMACAO}`,
   },
-  { label: 'Podcasts', icon: <PodcastsIcon />, route: `/${AppRoutes.PODCASTS}` },
+  {
+    label: 'Podcasts',
+    icon: <PodcastsIcon />,
+    route: `/${AppRoutes.PODCASTS}`,
+  },
   { label: 'Articles', icon: <ArticleIcon />, route: `/${AppRoutes.ARTIGOS}` },
   { label: 'Mais', icon: <MoreVertIcon /> },
+];
+
+const moreOptions = [
+  { label: 'Sobre Radio Djumbai', link: `/${AppRoutes.ABOUT_US}` },
+  { label: 'Contactos', link: `/${AppRoutes.CONTACTS}` },
+  { label: 'Nossa equipa', link: `/${AppRoutes.TEAM_MEMBERS}` },
 ];
 
 interface MobileRadioHomePageProps {
@@ -40,14 +51,14 @@ export default function MobileRadioHomePage({
 }: MobileRadioHomePageProps) {
   useCompany();
   const [value, setValue] = useState(0);
-  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleMoreClick = () => {
-    setOpen(true);
+  const handleMoreClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setAnchorEl(null);
   };
 
   return (
@@ -60,7 +71,11 @@ export default function MobileRadioHomePage({
       </AppBar>
 
       {/* Main Content */}
-      <Container>{children}</Container>
+      <Container sx={{ pt: 2, pb: 3 }}>
+        {children}
+
+        <Box height={100} />
+      </Container>
       {/* Bottom Navigation */}
       <BottomNavigation
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
@@ -88,7 +103,13 @@ export default function MobileRadioHomePage({
           )
         )}
       </BottomNavigation>
-      <MoreOptionsDialog open={open} onClose={handleClose} />
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {moreOptions.map((option, index) => (
+          <Link key={option.link} href={option.link} passHref>
+            <MenuItem onClick={handleClose}>{option.label}</MenuItem>
+          </Link>
+        ))}
+      </Menu>
     </Box>
   );
 }
