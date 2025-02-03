@@ -16,11 +16,11 @@ const theme = createTheme({
 
   },
   palette: {
-    mode: 'dark',
-    text : {
-      primary: '#fff',
-      secondary: '#fff',
-    },
+    // mode: 'dark',
+    // text : {
+    //   primary: '#fff',
+    //   secondary: '#fff',
+    // },
     primary: {
       main: teal[500],
     },

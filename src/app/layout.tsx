@@ -6,6 +6,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Main from './main';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -24,13 +25,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  ...pageProps
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang='en'>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Main>{children}</Main>
+        <div id='fb-root'></div>
+        <Script
+          async
+          defer
+          crossOrigin='anonymous'
+          src='https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v22.0&appId=212321750987465'
+          strategy='lazyOnload' // Recommended strategy for non-critical scripts
+        />
+        <Main {...pageProps}>{children}</Main>
       </body>
     </html>
   );

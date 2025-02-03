@@ -6,11 +6,13 @@ import { User } from '@/models/app-general.model';
 export class UserStore extends BaseStore<User> {
 
   couplePartner = {} as User;
+  isFacebookLoaded = false;
   constructor() {
     super('User');
 
     makeObservable(this, {
       couplePartner: observable,
+      isFacebookLoaded: observable,
       getCouplePartner: action
     }
     );
@@ -54,4 +56,8 @@ export class UserStore extends BaseStore<User> {
   get coupleNames() {
     return `${this.selectedItem?.name} & ${this.couplePartner?.name}`;
   }
+
+  setFacebookLoaded = () => {
+    this.isFacebookLoaded = true;
+  };
 }
