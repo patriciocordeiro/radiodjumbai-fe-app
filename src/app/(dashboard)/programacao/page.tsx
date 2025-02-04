@@ -110,7 +110,7 @@ const SchedulePage = () => {
               />
             ))}
         </Tabs>
-        <Card>
+        <Card elevation={0}>
           <CardContent>
             <List>
               {scheduleData.map((item, index) => (

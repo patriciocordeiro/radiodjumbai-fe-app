@@ -10,9 +10,10 @@ export enum ProcessStatus {
 
 export enum AppRoutes {
   HOME = 'home',
-  PROGRAMACAO = 'programacao',
   PODCASTS = 'podcasts',
-  ARTIGOS = 'artigos',
+  POSTS = 'posts',
+  NEWS = 'noticias',
+  PROGRAMACAO = 'programacao',
   MORE = 'more',
   TEAM_MEMBERS = 'nossa-equipa',
   ABOUT_US = 'sobre-nos',

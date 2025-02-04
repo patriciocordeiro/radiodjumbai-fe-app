@@ -43,7 +43,7 @@ const PodcastCard: React.FC<PodcastCardProps> = ({ podcast }) => {
               {podcast?.author}
             </Typography>
             <Link href={`/${AppRoutes.PODCASTS}/${podcast?.id}`}>
-              See Episodes
+              Ver episódios
             </Link>
           </CardContent>
         </Link>

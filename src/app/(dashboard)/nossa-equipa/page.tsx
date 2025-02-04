@@ -46,7 +46,7 @@ const TeamPage = () => {
           <Grid container spacing={2}>
             {store.teamMember.itemList.map((member, index) => (
               <Grid item xs={12} sm={6} md={4} key={member.name}>
-                <Card>
+                <Card elevation={0} style={{border: '1px solid #e0e0e0'}}>
                   <CardActionArea>
                     <Link
                       href={`/${AppRoutes.TEAM_MEMBERS}/${member.id}`}

@@ -40,6 +40,10 @@ export default function RootLayout({
           src='https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v22.0&appId=212321750987465'
           strategy='lazyOnload' // Recommended strategy for non-critical scripts
         />
+        <Script
+          src='https://cdn.cloud.caster.fm//widgets/embed.js'
+          strategy='lazyOnload'
+        />
         <Main {...pageProps}>{children}</Main>
       </body>
     </html>

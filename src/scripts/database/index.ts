@@ -226,18 +226,18 @@ async function createProgramAndSchedule() {
 // createProgramAndSchedule();
 
 // Example usage: Generate 10 podcasts with 5 episodes each
-// createFakePodcastData(10, 5);
+createFakePodcastData(10, 5);
 
 
 
 
 //Example usage:  Creates 10 fake team members.
-createFakeTeamMembers(10)
-    .then(() => process.exit(0))
-    .catch(err => {
-        console.error("An unexpected error occurred:", err);
-        process.exit(1);
-    });
+// createFakeTeamMembers(10)
+//     .then(() => process.exit(0))
+//     .catch(err => {
+//         console.error("An unexpected error occurred:", err);
+//         process.exit(1);
+//     });
 
 
 

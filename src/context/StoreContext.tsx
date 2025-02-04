@@ -9,6 +9,7 @@ import { PodcastStore } from '@/stores/podcast.store';
 import { EpisodeStore } from '@/stores/episode.store';
 import { ProgramStore } from '@/stores/program.store';
 import { ScheduleStore } from '@/stores/schedule.store';
+import { FacebookFeedStore } from '@/stores/facebook-feed.store';
 
 export interface Store {
   user: UserStore;
@@ -18,6 +19,7 @@ export interface Store {
   episode: EpisodeStore;
   schedule: ScheduleStore;
   program: ProgramStore;
+  facebookFeed: FacebookFeedStore;
 }
 
 export const initialStoreValue = {
@@ -28,6 +30,7 @@ export const initialStoreValue = {
   episode: new EpisodeStore(),
   schedule: new ScheduleStore(),
   program: new ProgramStore(),
+  facebookFeed: new FacebookFeedStore(),
 };
 
 // function to clear all stores
@@ -44,6 +47,7 @@ if (typeof window !== 'undefined') {
     episode: initialStoreValue.episode,
     schedule: initialStoreValue.schedule,
     program: initialStoreValue.program,
+    facebookFeed: initialStoreValue.facebookFeed,
   });
 }
 

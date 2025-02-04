@@ -1,6 +1,6 @@
 // src/theme.ts
 'use client';
-import { teal } from '@mui/material/colors';
+import { red, teal } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 import { Roboto } from 'next/font/google';
 
@@ -22,18 +22,26 @@ const theme = createTheme({
     //   secondary: '#fff',
     // },
     primary: {
-      main: teal[500],
+      main: '#CE1227',
     },
 
   },
   components: {
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none', // This disables the box-shadow globally
+
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
           boxShadow: 'none', // This disables the box-shadow globally
-          textTransform: 'none',
+          // textTransform: 'none',
         },
-        
+
       },
     },
     // MuiPaper: {

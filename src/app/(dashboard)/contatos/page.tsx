@@ -41,7 +41,7 @@ const ContactsPage = () => {
         <LoadingBox />
       ) : (
         <Box sx={{ mt: 2 }}>
-          <Card sx={{ height: '100%' }}>
+          <Card sx={{ height: '100%' }} elevation={0}>
             <CardContent>
               <List>
                 <ListItem>

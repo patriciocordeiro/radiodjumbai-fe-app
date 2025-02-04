@@ -85,3 +85,18 @@ export interface Program {
     genre?: string; // E.g., "News", "Music", "Talk Show"
     imageUrl?: string; // Image for the program
 }
+
+export interface FacebookFeed {
+    id: string;
+    permalink_url: string;
+    message?: string;
+    attachments?: {
+        data: {
+            description?: string;
+            title?: string;
+        }[];
+    };
+    story?: string; // Add this if you're also requesting the 'story' field
+    created_time?: string; // Add this if you're requesting the created_time
+    full_picture?: string; // Add this if you're requesting full_picture
+}
